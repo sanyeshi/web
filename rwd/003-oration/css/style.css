@@ -1,0 +1,23 @@
+body
+{
+   background-color: #000000;
+   color: #ffffff;
+}
+
+@media (orientation:landscape)
+{
+    body
+    {
+        background-color: #0381bb;
+        color: #ff0000;
+    }
+}
+
+@media (orientation: portrait)
+{
+   body
+   {
+       background-color: #eeeeee;
+       color: pink;
+   }
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>透明度动画</title>
+    <style>
+        #box
+        {
+           width: 100px;
+           height: 100px;
+           background: red;
+           opacity: 0.3;
+           filter:(opacity=30);
+        }
+    </style>
+    <script>
+        window.onload=function(){
+           var box=document.getElementById('box');
+           var default_opacity=30;
+           var timer=null;
+           box.onmouseover=function(){
+               animate(100);
+           };
+           box.onmouseout=function(){
+              animate(default_opacity);
+           };
+
+
+           function animate(iTarget)
+           {
+              var speed=5;
+              if(timer)
+              {
+                clearInterval(timer);
+                timer=null;
+              }
+              if(iTarget>default_opacity)
+              {
+                 var opacity=30;
+                 timer=setInterval(function(){
+                     if(opacity>=iTarget)
+                     {
+                         clearInterval(timer);
+                         timer=null;
+                     }
+                     else
+                     {
+                         opacity+=speed;
+                         box.style.opacity=opacity/100;
+                         box.style.filter='(opacity='+opacity+')';
+                     }
+                 },30);
+              }
+              else
+              {
+                  var opacity=box.style.opacity*100;
+                  timer=setInterval(function(){
+                      if(opacity<=iTarget)
+                      {
+                          clearInterval(timer);
+                          timer=null;
+                      }
+                      else
+                      {
+                          opacity-=speed;
+                          box.style.opacity=opacity/100;
+                          box.style.filter='(opacity='+opacity+')';
+                      }
+                  },30);
+              }
+           }
+        }
+    </script>
+</head>
+<body>
+      <div id="box"></div>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>图片循环播放</title>
+    <style>
+        *{
+            padding: 0;
+            margin: 0;
+            font-size: 12px;
+        }
+        .container
+        {
+            width: 1080px;
+            height: 720px;
+            margin: 0 auto;
+            border: 1px solid lightgray;
+        }
+
+
+        .image-container
+        {
+            width: 936px;
+            height: 222px;
+            margin: 0 auto;
+            margin-top: 100px;
+            overflow: hidden;
+        }
+
+        .image-list
+        {
+           width:1560px;
+           height: 222px;
+        }
+
+        .image-list img
+        {
+            width: 310px;
+            height: 220px;
+            float: left;
+            border: 1px dashed lightgray;
+        }
+    </style>
+    <script>
+          window.onload=function()
+          {
+            var image_container=document.getElementById('image-container');
+            var image_list=document.getElementById('image-list');
+            var image_list_innerHTML=image_list.innerHTML;
+            var image_list_width=image_list.scrollWidth;
+            image_list.innerHTML=image_list_innerHTML+image_list_innerHTML;
+            image_list.style.width=2*image_list_width+'px';
+            var timer=null;
+            function slide()
+            {
+                if(image_container.scrollLeft>=image_list_width)
+                {
+                    image_container.scrollLeft=0;
+                }
+                else
+                {
+                    image_container.scrollLeft++;
+                }
+            }
+            function  play()
+            {
+               if(timer)
+               {
+                  clearInterval(timer);
+                  timer=null;
+               }
+               timer=setInterval(slide,30);
+            }
+            function stop()
+            {
+                clearInterval(timer);
+                timer=null;
+            }
+            image_container.onmouseover=stop;
+            image_container.onmouseout=play;
+            setTimeout(play,1000);
+          }
+
+    </script>
+</head>
+<body>
+      <div class="container" >
+           <div class="image-container" id="image-container">
+               <div class="image-list" id="image-list">
+                   <a href="#"><img src="img/01.jpg"></a>
+                   <a href="#"><img src="img/02.jpg"></a>
+                   <a href="#"><img src="img/03.jpg"></a>
+                   <a href="#"><img src="img/04.jpg"></a>
+                   <a href="#"><img src="img/05.jpg"></a>
+               </div>
+           </div>
+      </div>
+</body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>图片焦点轮播</title>
+    <style>
+         *{
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+         }
+         /*
+             父容器采用相对定位，overflow:hidden
+         */
+         .image-container
+         {
+            width:480px;
+            height: 360px;
+            overflow: hidden;
+            position: relative;
+            margin: 0 auto;
+            margin-top: 20px;
+         }
+         /*
+            子容器采用绝对定位，宽度为父容器的n倍，在子容器中图片依次排开
+         */
+         .image-list{
+            width: 3360px;
+            height: 360px;
+            position: absolute;
+            z-index: 1;
+         }
+
+         /*图片依次排开*/
+        .image-list img
+        {
+           width: 480px;
+           height: 360px;
+           float: left;
+        }
+
+        /*
+           指示按钮
+        */
+        .image-controller
+        {
+           width: 480px;
+           height: 360px;
+           position:absolute;
+           top: 0;
+           left:0;
+           z-index: 2;
+        }
+
+       #image-hints
+       {
+           position:absolute;
+           width: 120px;
+           height: 50px;
+           right:  10px;
+           bottom: 10px;
+       }
+
+       #image-hints ul li
+       {
+          float: left;
+          margin-left:10px;
+       }
+       #image-hints ul li  a, #image-hints ul li a:visited
+       {
+         color:#ffffff;
+         font-size: 50px;
+       }
+
+       #image-hints ul li a:hover
+       {
+          color: #000000;
+       }
+
+       #image-hints ul li .selected
+       {
+           color: #000000;
+       }
+
+
+    </style>
+    <script type="text/javascript" src="../../js/jquery-1.10.1.js"></script>
+    <script>
+        $(function(){
+
+            //全局
+            var image_width=480;
+            var image_height=360;
+            var image_container=$('#image-container');           //父容器
+            var image_list=$('#image-list');                     //子容器
+            var image_hints=$('#image-hints').find('a');         //提示按钮
+            var image_count=image_hints.length;                  //图片数量
+            var currentIndex=0;                                  //自动播放时，默认从下标为0的图片
+            var firstIndex=0;                                    //第一张图片的下标(忽略为循环播放在首尾插入的图片)
+            var lastIndex=image_count-1;                         //最后-张图片的下标
+            var right_limit_offset=-(image_count+1)*image_width; //滚动到尾部插入的图片，此时应该改变left到第一张图片
+            var left_limit_offset=0;                             //滚动到首部插入的图片，此时应该改变left到最后一张图片
+            var timer=null;                                      //自动切换定时器
+
+            /*
+               高亮指示按钮
+            * */
+            function highlight_hints(index)
+            {
+                image_hints.removeClass('selected');
+                $(image_hints[index]).addClass('selected');
+            }
+
+            /*
+              焦点图滑动
+            * */
+            function slide(offset)
+            {
+                var currentLeft=parseInt(image_list.css('left'));
+                var targetLeft=currentLeft+offset;
+                var targetIndex=((-targetLeft)/image_width-1+image_count)%image_count;
+                highlight_hints(targetIndex);
+                image_list.animate({'left':'+='+offset+'px'},300,function()
+                {
+                    if(targetLeft==left_limit_offset)
+                    {
+                        image_list.css('left',-image_count*image_width+'px');
+                    }
+                    else if(targetLeft==right_limit_offset)
+                    {
+                        image_list.css('left',-1*image_width+'px');
+                    }
+                    currentIndex=targetIndex;
+                });
+            }
+
+            /*
+                自动播放
+            * */
+             function play()
+             {
+                 if(!timer)
+                 {
+                   timer=setInterval(function(){
+                      slide(-image_width);
+                    },3000);
+                 }
+             }
+
+            /*
+               停止播放
+            * */
+             function stop()
+             {
+                 clearInterval(timer);
+                 timer=null;
+             }
+
+            /*
+              点击指示按钮切换
+            * */
+            image_hints.click(function()
+            {
+                var targetIndex=parseInt(this.id);
+                if(currentIndex==targetIndex) return;
+                var offset=0;
+                if(currentIndex==firstIndex&&targetIndex==lastIndex)
+                {
+                      offset=image_width;
+                }
+                else if(currentIndex==lastIndex&&targetIndex==firstIndex)
+                {
+                     offset=-image_width;
+                }
+                else
+                {
+                    offset=(targetIndex-currentIndex)*(-image_width);
+                }
+                currentIndex=targetIndex;
+                slide(offset);
+            });
+            /**
+             * 鼠标移入，停止自动播放；移出，开始播放
+             * */
+            image_container.hover(stop,play);
+
+            //自动开始播放
+            play();
+
+        })
+    </script>
+</head>
+<body>
+     <div class="image-container" id="image-container">
+           <div class="image-list" id="image-list" style="left: -480px">
+                <img src="img/05.jpg">
+                <img src="img/01.jpg">
+                <img src="img/02.jpg">
+                <img src="img/03.jpg">
+                <img src="img/04.jpg">
+                <img src="img/05.jpg">
+                <img src="img/01.jpg">
+           </div>
+           <div class="image-controller">
+                <div id="image-hints">
+                    <ul>
+                        <li><a href="javascript:void(0)" class="selected" id="0">.</a></li>
+                        <li><a href="javascript:void(0)" id="1">.</a></li>
+                        <li><a href="javascript:void(0)" id="2">.</a></li>
+                        <li><a href="javascript:void(0)" id="3">.</a></li>
+                        <li><a href="javascript:void(0)" id="4">.</a></li>
+                    </ul>
+                </div>
+           </div>
+     </div>
+</body>
+</html>

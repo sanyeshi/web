@@ -1,0 +1,145 @@
+
+body
+{
+   background-color:#ffffff;
+   color:#000;
+   text-align: center;
+}
+
+ h3
+{
+    padding:20px;
+}
+
+.container
+{
+    width: 960px;
+    margin: 0 auto;
+}
+
+.img
+{
+  margin-top: 20px;
+  background-image: url("../image/01.jpg");
+  background-position: 50% 50%;    /*图片垂直居中*/
+  background-repeat: no-repeat;
+  background-size: cover;         /*把背景图像扩展至足够大，以使背景图像完全覆盖背景区域。背景图像的某些部分也许无法显示在背景定位区域中。*/
+  -webkit-background-size: 100%;
+  padding-top: 56%;              /* 图像的宽/长度*/
+}
+
+
+
+/*
+   图片响应式布局
+*/
+img
+{
+    width: 100%;
+    max-width: 100%;
+}
+
+/*
+   背景图片响应式布局
+*/
+
+
+.header,.footer
+{
+   height:100px;
+   margin-top: 20px;
+   background-color: #eeeeee;
+}
+
+.main
+{
+   height:300px;
+   margin-top: 20px;
+}
+
+.content
+{
+    width: 600px;
+    height: 300px;
+    float: left;
+    background-color:#ddefcb;
+}
+.slider
+{
+    width: 300px;
+    height:300px;
+    float: right;
+    background-color:#ffcbdd;
+}
+
+.footer
+{
+  clear: both;
+}
+
+.toggle-btn
+{
+    display: none;
+}
+
+
+@media (min-width: 1200px)
+{
+  .container
+  {
+    width: 1170px;
+  }
+
+  .content
+  {
+    width: 710px;
+  }
+
+  .slider
+  {
+      width:400px;
+  }
+}
+
+@media (max-width: 959px)
+{
+
+  .content
+  {
+      width: 67%;
+  }
+  .slider
+  {
+      width: 30%;
+  }
+}
+
+
+@media (max-width:767px)
+{
+    .container,.content,.slider
+    {
+        width: 100%;
+    }
+
+
+}
+
+@media ( max-width: 480px )
+{
+    .img
+    {
+        background-image: url(../image/01_s.jpg);
+    }
+}
+
+@media ( max-width: 480px ) and ( min-resolution: 2dppx ), ( max-width: 480px ) and ( -webkit-min-device-pixel-ratio: 2 )
+{
+    .img
+    {
+        background-image: url( ../image/01_s_2x.jpg);
+    }
+}
+
+
+

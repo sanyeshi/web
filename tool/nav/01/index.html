@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>东华大学</title>
+    <style>
+        *{
+           margin: 0px;
+           padding: 0px;
+        }
+
+        .container{
+           width: 960px;
+           margin: 0px auto;
+        }
+
+
+    </style>
+</head>
+<body>
+
+     <div class="container">
+         <div class="header">
+            <img src="img/main.jpg">
+         </div>
+         <!--包含导航栏-->
+             <!--服务器端包含-->
+             <!--<jsp:include page="nav.html"></jsp:include>-->
+             <!--客户端包含有两种方式：JavaScript和iframe。让我们先看看两种方法各有什么利弊。
+                两种方法中Javascript生成的页面格式比较好，Javascript可以从一个URL取到页面片断然后镶嵌在另一个页面的任何位置 。
+             其结果与服务器端包含的结果基本上一样，但弊端是客户端必须开启Javascript功能（目前大多数人是选择开启的，但也有少数出于安全方面的考虑不开启）。
+             另一个弊端是搜索引擎是看不到由Javascript包含的页面的内容的，这对你的网站推广比较不利。
+                 使用iframe比较简单，它可以强制一个HTML页面镶嵌在另一个页面中，类似于是用 object控件将Flash电影、录像、或者MP3播放器嵌入一个页面中。
+                 使用iframe，用户端不需要开启Javascript功能。但不利的方面是iframe有固定的高度和宽度，不能随着被嵌入页面的大小而改变。
+                 当被嵌入页面大于给定高宽度时，会显示滚动条(当然你也可以使用 scrolling = "no" 来强制滚动条不显示，但这样页面内容会显示不完整)，
+                 影响页面美观。另外就是搜索引擎可能不收录iframe引用的页面，不利网站推广。-->
+             <!--iframe有问题，弹出二级菜单被主页遮挡。iframe包含的页面只能在iframe设定好的区域内显示--->
+             <iframe src="nav.html" width="450" height="40" frameborder="0" scrolling="yes"></iframe>
+
+
+         <div class="content">
+               <p>
+                   致力于建设“国内一流、国际有影响，有特色的高水平大学”的东华大学以“海纳百川、追求卓越”之勇气，坚持走“观念兴校、学术兴校、管理兴校”发展之路，在“211工程”国家重点建设的高等院校中独树一帜。
+
+                   地理历史：学校地处中国上海，三个校区分别位于松江区和长宁区，占地面积近2000亩，校园环境宜人，系“上海市花园单位”。学校创建于1951年，前身是华东纺织工学院，1985年，更名为中国纺织大学，1999年，更名为东华大学。1960年，被国家教育部确定为全国重点大学，是中国首批具有博士、硕士、学士三级学位授予权的大学之一。
+               </p>
+         </div>
+     </div>
+
+</body>
+</html>

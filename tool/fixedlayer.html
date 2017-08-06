@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<script type="text/javascript" src="js/jquery-1.10.1.js"></script>
+<script type="text/javascript">
+/*
+ * 滚动条距离浏览器顶部的高度 = 窗口滚动条顶部坐标；
+ * 滚动条距离浏览器底部的高度 = 文档（页面）内容实际高度 - 滚动条距离浏览器顶部的高度 - 窗口可视范围的高度；
+ */
+	//取窗口可视范围的高度
+	function getClientHeight()
+	{
+		return document.documentElement.clientHeight;
+	}
+	//取窗口滚动条距离页面顶部高度
+	function getScrollTop()
+	{
+		var scrollTop = 0;
+		if (document.documentElement && document.documentElement.scrollTop)
+		{
+			scrollTop = document.documentElement.scrollTop;
+		}
+		else if (document.body)
+		{
+			scrollTop = document.body.scrollTop;
+		}
+		return scrollTop;
+	}
+	//取文档内容实际高度
+	function getScrollHeight()
+	{
+		return Math.max(document.body.scrollHeight,
+				document.documentElement.scrollHeight);
+	}
+	
+	
+	window.onscroll = function()
+	{
+		var height = getClientHeight();
+		var theight = getScrollTop();
+		var rheight = getScrollHeight();
+		var bheight = rheight - theight - height;
+		document.getElementById('info').innerHTML = '此时浏览器可见区域高度为：' + height
+				+ '<br />此时文档内容实际高度为：' + rheight + '<br />此时滚动条距离顶部的高度为：'
+				+ theight + '<br />此时滚动条距离底部的高度为：' + bheight;
+	}
+	
+	function fixDiv(div_id, offsetTop)
+	{
+		var offsetTop = offsetTop||0;
+		var obj = $('#' + div_id);
+		var objTop = obj.offset().top;
+		var isIE6 = false;
+		if (isIE6)
+		{
+			$(window).scroll(function()
+			{
+				if ($(window).scrollTop() <= objTop)
+				{
+					obj.css({
+						'position' : 'relative',
+						'top' : 0
+					});
+				}
+				else
+				{
+					obj.css({
+						'position' : 'absolute',
+						'top' : $(window).scrollTop() + offsetTop + 'px',
+						'z-index' : 1
+					});
+				}
+			});
+		}
+		else
+		{
+			$(window).scroll(function()
+			{
+				if ($(window).scrollTop() <= objTop)
+				{
+					obj.css({
+						'position' : 'relative',
+						'width':'100%',
+						'top' : 0
+					});
+				}
+				else
+				{
+					obj.css({
+						'position' : 'fixed',
+						'width':'100%',
+						'top' : 0 + offsetTop + 'px',
+						'z-index' : 1
+					});
+				}
+			});
+		}
+	}
+	$(function()
+	{
+		fixDiv('info');
+	});
+</script>
+</head>
+<body>
+	<div style="height: 500px;"></div>
+	<div id="info"></div>
+	<div style="height: 2000px;"></div>
+</body>
+</html>

@@ -1,0 +1,191 @@
+
+body
+{
+   background-color:#ffffff;
+   color:#000;
+   text-align: center;
+}
+
+ h3
+{
+    padding:20px;
+}
+ul
+{
+   list-style: none;
+}
+
+ul li,ul li a
+{
+   display: inline-block;
+   text-decoration: none;
+   margin: 7px 15px;
+   color: #3b3b3b;
+}
+
+
+ul li a:hover
+{
+   background-color: #eeeeee;
+}
+
+
+.container
+{
+    width: 960px;
+    margin: 0 auto;
+}
+
+.nav
+{
+    height:100px;
+}
+
+.header,.footer
+{
+   height:100px;
+   margin-top: 20px;
+   background-color: #eeeeee;
+}
+
+.main
+{
+   height:300px;
+   margin-top: 20px;
+}
+
+.content
+{
+    width: 600px;
+    height: 300px;
+    float: left;
+    background-color:#ddefcb;
+}
+.slider
+{
+    width: 300px;
+    height:300px;
+    float: right;
+    background-color:#ffcbdd;
+}
+
+.footer
+{
+  clear: both;
+}
+
+.toggle-btn
+{
+    display: none;
+}
+
+
+@media (min-width: 1200px)
+{
+  .container
+  {
+    width: 1170px;
+  }
+
+  .content
+  {
+    width: 710px;
+  }
+
+  .slider
+  {
+      width:400px;
+  }
+}
+
+@media (max-width: 959px)
+{
+
+  .content
+  {
+      width: 67%;
+  }
+  .slider
+  {
+      width: 30%;
+  }
+}
+
+
+@media (max-width:767px)
+{
+    .container,.content,.slider
+    {
+        width: 100%;
+    }
+
+    .nav
+    {
+        display: none;
+    }
+
+    /*
+      切换按钮
+    */
+    .toggle-btn
+    {
+       display: inline-block;
+       position: absolute;
+       top: 100px;
+       right:20px;
+       text-decoration: none;
+       color: #000000;
+    }
+
+    /*
+      <a href="#nav" class="open toggle-btn"><i>|||</i></a>
+      点击链接时，导航到id=nav元素，此元素为导航的目标元素
+      导航为目标状态时的样式
+    */
+    #nav:target
+    {
+        display: block;
+        position: absolute;
+        top: 110px;
+        width: 100%;
+        opacity:0.6;
+        z-index: 9999;
+    }
+
+    #nav:target .close
+    {
+        position: absolute;
+        top: -10px;
+        right: 28px;
+        color: #000000;
+    }
+
+    #nav:target ul
+    {
+        background-color: #000000;
+        margin: 0px;
+        padding: 0px;
+        width: 100%;
+    }
+
+    #nav:target ul li,#nav:target ul li a
+    {
+        display: block;
+        margin: 0px;
+        padding: 0px;
+        margin-top: 10px;
+        color: #eeeeee;
+        text-align: left;
+        width: 100%;
+    }
+
+    #nav:target ul li a:hover
+    {
+        background-color: #3b3b3b;
+    }
+
+}
+
+
+
+

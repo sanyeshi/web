@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>浮动文字层</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-size: 12px;
+        }
+
+        body
+        {
+            background-color:#f3f3f3;
+        }
+        .container{
+           width: 980px;
+           height: 720px;
+           border: 1px solid lightgray;
+           margin: 0 auto;
+        }
+
+        .img{
+            width: 310px;
+            height:250px;
+            background-color: #ffffff;
+            margin: 0 auto;
+            margin-top: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .img img
+        {
+           width: 310px;
+           height: 220px;
+           cursor: pointer;
+        }
+
+        .img-detail
+        {
+           line-height: 30px;
+           width: 300px;
+           height: 220px;
+           padding-left: 10px;
+           position: absolute;
+           top: 220px;
+           overflow: hidden;
+
+        }
+
+        .img-detail-show
+        {
+            line-height: 30px;
+            width: 300px;
+            height: 220px;
+            padding-left: 10px;
+            position: absolute;
+            top: 0px;
+            color: #ffffff;
+            background-color:#000000;
+            opacity: 0.5;
+            filter:(opacity=50);
+        }
+
+
+
+    </style>
+    <script>
+        window.onload=function(){
+            var img=document.getElementById('img');
+            var text=img.getElementsByTagName('div')[0];
+
+            function show()
+            {
+               text.className='img-detail-show';
+               text.style.top='0px';
+            }
+            function hide()
+            {
+                text.className='img-detail';
+                text.style.top='220px';
+            }
+            img.onmouseover=show;
+            img.onmouseout=hide;
+        }
+    </script>
+</head>
+<body>
+      <div class="container">
+            <div class="img" id="img">
+                 <img src="img/01.jpg" >
+                 <div class="img-detail">
+                     北冥南雨<br>
+                     北冥南雨<br>
+                     北冥南雨<br>
+                     北冥南雨<br>
+                 </div>
+            </div>
+      </div>
+</body>
+</html>

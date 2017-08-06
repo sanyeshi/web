@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>页面顶部广告展开和收缩</title>
+    <style>
+        *{
+            margin: 0px;
+            padding:0px;
+            font-size: 12px;
+        }
+
+        .container
+        {
+           width: 962px;
+           height: 720px;
+           margin: 0 auto;
+        }
+
+        .ad
+        {
+           display: none;
+           overflow: hidden;
+           height: 0px;
+        }
+        .content
+        {
+          width: 962px;
+          height: 500px;
+          border: 1px dashed lightgray;
+        }
+    </style>
+    <script>
+        window.onload=function(){
+          var ad=document.getElementById('ad');
+          var ad_height=386;
+          var step=5;
+          var timer=null;
+
+          function show()
+          {
+             if(timer)
+             {
+                clearInterval(timer);
+                timer=null;
+             }
+             ad.style.display='block';
+             var ad_current_height=0;
+             timer=setInterval(function(){
+                 if(ad_current_height>=ad_height)
+                 {
+                   clearInterval(timer);
+                   timer=null;
+                   setTimeout(hide,3000);
+                 }
+                 else
+                 {
+                   ad_current_height+=step;
+                   ad.style.height=ad_current_height+'px';
+                 }
+             },30);
+          }
+
+          function hide()
+          {
+              var ad_current_height=ad.scrollHeight;
+              timer=setInterval(function(){
+                   if(ad_current_height<=0)
+                   {
+                       clearInterval(timer);
+                       timer=null;
+                       ad.style.height='0px';
+                       ad.style.display='none';
+                   }
+                   else
+                   {
+                       ad_current_height-=step;
+                       ad.style.height=ad_current_height+'px';
+                   }
+              },30);
+          }
+          setTimeout(show,1000);
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+
+        <div class="ad" id="ad">
+              <img src="ad.png">
+        </div>
+        <div class="content">
+        </div>
+    </div>
+</body>
+</html>

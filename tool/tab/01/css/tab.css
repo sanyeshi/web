@@ -1,0 +1,78 @@
+
+*{
+   margin: 0;
+   padding:0;
+   font-size: 12px;
+    list-style: none;
+}
+
+.notice{
+    width: 398px;
+    height:100px;
+    border: 1px solid #eeeeee;
+    margin: 20px;
+    overflow: hidden;
+}
+/*
+   notice宽度为398px，加上左右边框为400px
+   由于li在hover或选定状态需要增加左右边框，若notice-title和ul按默认定位规则，
+   则靠近notice边框的li由于左右边框，与notice边框紧挨着，边框将是正常边框的2倍；
+   若  notice-title采用相对定位，ul采用绝对定位,并使ul左偏移-1px，则增加的边框
+   将重叠。
+*/
+.notice-title{
+   height: 36px;
+   position: relative;
+}
+.notice-title ul
+{
+   position:absolute;
+   width: 400px;
+   left: -1px;
+   list-style: none;
+}
+
+.notice-title ul li{
+   float: left;
+   width: 78px;
+   height: 35px;
+   text-align: center;
+   line-height: 35px;
+   padding: 0 1px;    /*预留边框*/
+   background-color:#f7f7f7;
+   border-bottom: 1px solid #eeeeee;
+
+}
+
+.notice ul li a:link, .notice ul li a:visited
+{
+    text-decoration: none;
+    color: #000;
+}
+
+.notice ul li a:hover
+{
+   font-size: 13px;
+   color:#b3ab79;
+}
+
+.notice-title ul li.select{
+   background-color: #ffffff;
+   border-bottom-color: #ffffff;
+   padding: 0px;
+   border-left:1px solid #eeeeee;
+   border-right: 1px solid #eeeeee;
+   font-weight: bolder;
+}
+
+.notice-content .mod{
+   margin: 10px 10px 10px 20px;
+   width: 368px;
+   height: 44px;
+}
+
+.notice-content .mod li{
+   float: left;
+   width: 184px;
+   height:22px;
+}

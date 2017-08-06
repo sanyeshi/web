@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>遮罩层</title>
+    <style>
+        body{
+           margin: 0px;
+           padding: 0px;
+         }
+        .container{
+            width: 1024px;
+            height: 1600px;
+            border: 1px solid gainsboro;
+            margin: 0 auto;
+            padding: 0;
+        }
+        /*绝对定位*/
+        #mask{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color:#000000;
+            opacity: 0.3;
+            filter:alpha(opacity=75);
+            z-index: 1000;
+        }
+        /*固定定位*/
+        #login{
+            display:none;
+            width: 600px;
+            height: 360px;
+            background-color: steelblue;
+            position: fixed;
+            top: 30%;
+            left:30%;
+            z-index: 1001;
+        }
+        #close{
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            color: #ffffff;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+     <div class="container">
+         <div id="mask"></div>
+         <div id="login">
+             <div id="close">x</div>
+         </div>
+     </div>
+     <script type="text/javascript" src="../js/jquery-1.10.1.js"></script>
+     <script type="text/javascript">
+         $(function(){
+             //显示遮罩层
+             function showMask(){
+                 //获取文档大小和窗口大小
+                 var docWidth=$(document).width();
+                 var docHeight=$(document).height();
+                 var windowHeight=$(window).height();
+
+                 //获取login区域大小
+                 var login=$('#login');
+                 var loginWidth=login.width();
+                 var loginHeight=login.height();
+                 var loginLeft=(docWidth-loginWidth)*0.5;
+                 var loginTop=(windowHeight-loginHeight)*0.5;
+                 //显示遮罩层
+                 $('#mask').width(docWidth).height(docHeight).show();
+                 login.css({
+                       top:loginTop,
+                       left:loginLeft
+                 }).show();
+             }
+             //隐藏遮罩层
+             function hideMask(){
+                 $('#mask').hide();
+                 $('#login').hide();
+             }
+             showMask();
+             //点击遮罩层隐藏
+             $('#mask').click(function(){
+                 hideMask();
+             });
+             //点击关闭按钮隐藏
+             $('#close').click(function(){
+                hideMask();
+             });
+             //窗体大小改变隐藏遮罩层
+             $(window).resize(function(){
+                 hideMask();
+             });
+         })
+     </script>
+</body>
+</html>

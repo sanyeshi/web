@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>排序表格</title>
+<style type="text/css">
+  .sortable-table thead tr td
+   {
+      background-color: green;
+      color: white;
+   }
+   
+   .sortable-table td
+   {
+      height:24px;
+      line-height:24px;
+      text-align: center;
+   }
+   
+   .sortable-img
+   {
+      margin: 0 2px 2px 2px;
+      cursor:pointer;
+   }
+</style>
+</head>
+<body>
+       <table border="1" class="sortable-table">
+           <thead>
+               <tr>                  
+                  <td class="sortable-col" type="number">编号</td>
+                  <td class="sortable-col" type="string">姓名</td>
+                  <td>年龄</td>
+                  <td>爱好</td>
+                  <td class="sortable-col" type="date">出生日期</td>
+                </tr>
+           </thead>
+           <tbody>
+                <tr>                  
+                  <td>02</td>
+                  <td>李四</td>
+                  <td>26</td>
+                  <td>登山</td>
+                  <td>1789-1-18</td>
+                </tr>
+                <tr>                  
+                  <td>01</td>
+                  <td>张三</td>
+                  <td>19</td>
+                  <td>跑步</td>
+                  <td>1780-12-12</td>
+                </tr>
+                <tr>                  
+                  <td>03</td>
+                  <td>赵六</td>
+                  <td>32</td>
+                  <td>桌球</td>
+                  <td>1789-2-2</td>
+                </tr>
+           </tbody>
+       </table>
+       
+       <script type="text/javascript">
+            /**
+            * 实现思路:1>自定义属性，指定每列排序类型，如按数字、字符串、日期等
+                     2>将行和该行待排序的列的值，以键值对封装为对象，并放置在数组中；
+                     3>对2>的数组以指定行排序;
+                     4>更新tbody，创建文档片段，将排序后数组的每个行插入到文档片段中；
+                     5>将4>中的文档片段插入到tbody
+            */
+            var table=document.getElementsByTagName('table')[0];
+            var headers=table.tHead.rows[0].cells;
+            for(var i=0;i<headers.length;i++)
+            {
+            	var header=headers[i];
+            	if('sortable-col'==header.className)
+            	{
+            		var image=document.createElement('img');
+            		image.className='sortable-img';
+            		image.src='image/asc.gif';
+            		header.appendChild(image);
+            		header.onclick=click;
+            		header.reverse=-1;
+            	}
+            }
+            
+            //点击事件
+            function click()
+            {
+            	var image=this.getElementsByTagName('img')[0];
+            	var src='';
+            	var reverse=this.reverse*-1;
+            	if(reverse==1)
+            	{
+            		src='image/desc.gif';
+            	}
+            	else
+            	{
+            		src='image/asc.gif';
+            	}
+                image.src=src;
+                this.reverse=reverse;
+            	sort(this.cellIndex,reverse);
+            }
+            
+            var comparators={
+                string:function(a,b){
+                	return 	a.localeCompare(b);
+                },
+            	number:function(a,b){
+            		if(a>b) return 1;
+            		if(a<b) return -1;
+            		return 1;
+            	},
+            	date:function(a,b){
+            		a=a.getTime();
+            		b=b.getTime();
+            		if(a>b) return 1;
+            		if(a<b) return -1;
+            		return 1;
+            	}
+            };
+            
+            //排序
+            function sort(colIndex,reverse)
+            {
+               var rows=table.tBodies[0].rows;
+               if(colIndex>=rows[0].cells.length) return;
+               var type=headers[colIndex].getAttribute('type')||'string';
+               reverse=reverse||-1;
+               var arr=[];
+               for (var i = 0; i < rows.length; i++)
+			   {
+				  arr.push({
+					  node:rows[i],
+					  value:getInnerText(rows[i].cells[colIndex])
+				  });
+			   }
+               //对数组进行排序
+               arr.sort(function(a,b){
+            	  var a=a.value;
+            	  var b=b.value;
+            	  if('date'==type)
+            	  {
+            		a=dateDecode(a);
+            		b=dateDecode(b);
+            	  }
+            	  return comparators[type](a,b)*(-reverse);
+               });
+               
+               //插入多个节点时，创建文档片段可以提高效率
+               var fragment=document.createDocumentFragment();
+               for (var i = 0;  i< arr.length; i++)
+			   {
+            	   fragment.appendChild(arr[i].node);
+			   }
+               //若节点已存在，则会将节点移动到指定的片段
+               table.tBodies[0].appendChild(fragment);
+            }
+            
+            
+            //获取节点的内部文本
+            function getInnerText(node)
+            {
+            	if(node.innerText)
+            		return trim(node.innerText);
+            	//文本节点
+            	if(node.nodeType==3)
+            	{
+            		return node.nodeValue;
+            	}
+            	else if (node.nodeType==1)
+            	{//元素节点
+				 	var ret='';
+            	    for (var i = 0; i < node.childNodes.length; i++)
+					{
+						ret+=getInnerText(node.childNodes[i]);
+					}
+				}
+            }
+            
+            //将字符串转换为日期
+            function dateDecode(str)
+			{
+            	str=str.replace(/年|月/g,'-').replace(/日|号/g,'').replace(/点|分/g,':').replace(/秒/g,'');
+            	var val=Date.parse(str);
+            	var date=new Date(val);
+            	return date;
+			}
+            function trim(str)
+            {
+            	return str.replace(/^\s+/,'').replace(/\s+$/,'');
+            }
+       </script>
+</body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>提示</title>
+<style type="text/css">
+
+  *{
+     padding: 0;
+     margin: 0;
+  }
+  
+  
+ 
+ /*
+   div
+   {
+      margin-top: 100px;
+   }
+   */
+   
+  
+  .tooltip{
+     cursor: pointer;
+     text-decoration: underline;
+     color: blue;
+   }
+   
+   .tip{
+     min-width:100px;
+     max-width:300px;
+	 position: absolute;
+	 z-index: 999;
+	 border: 1px solid #BAD0EF;
+	 background: #E9F3FF;
+	 border-radius:4px;
+	 -moz-border-radius:4px;
+	 -khtml-border-radius:4px;
+	 -webkit-border-radius:4px;
+	 padding: 4px;
+	 line-height: 20px;
+	 font-size:12px;
+	 color: #555; 
+   }
+</style>
+</head>
+<body>
+     
+      <div style="margin-top: 100px">
+      </div>
+      <div>
+        <p>
+	         <span class="tooltip" title="A型 | 天秤座 | 165cm | 43kg">赵丽颖</span>，1987年10月16日出生于河北省廊坊市，中国内地女演员。2006年，参加雅虎搜星，获得冯小刚组冠军，并担任冯小刚执导的广告片《跪族篇》女主角，
+	         由此开始自己的演艺道路 ，先后参演了<span class="tooltip" title="讲述了年轻漂亮的小学数学老师文丽和重型机械厂技术员佟志的一生婚姻历程。该剧于2007年9月13日首播。该剧获得第14届上海电视节白玉兰奖最佳电视剧、第27届中国电视剧飞天奖等多个奖项。">《金婚》</span>、《苍穹之昴》等剧集。2011年因出演《新还珠格格》中的晴儿一角受到关注；2013年凭电视剧《陆贞传奇》
+	         中的女相陆贞一角广受关注；后又主演了《错点鸳鸯·戏点鸳鸯》《追鱼传奇》 《妻子的秘密》等电视剧。2014年主演的《杉杉来了》暑假播出引起热议。
+	         2015年主演的<span class="tooltip" title="《花千骨》是由慈文传媒集团制作并发行，林玉芬、高林豹、梁胜权联合执导，霍建华、赵丽颖领衔主演，蒋欣、杨烁特别出演，张丹峰、李纯、马可、鲍天琦、安悦溪、徐海乔等主演的古装玄幻仙侠剧。">《花千骨》</span> 登陆湖南卫视。
+        </p>
+      </div>
+     
+     
+     <script type="text/javascript">
+     
+     
+     function ToolTip()
+     {
+    	 
+     }
+     
+     var tip=null;
+     if(document.getElementsByClassName)
+     {
+    	 /*注意
+    	   1>被class='tooltip'修饰的元素，若包含子元素，则事件冒泡产生的影响
+    	   2>onmouseenter与onmouseover、onmouseleave与onmouseout的区别*/
+    	 var tooltips=document.getElementsByClassName('tooltip');
+         for ( var i=0;i<tooltips.length;i++ )
+		 {
+		    tooltips[i].onmouseenter=mouseenter;
+		    tooltips[i].onmouseleave=mouseleave;
+		 }  	
+     }
+     function mouseenter(event)
+     {
+    	
+    	if(!tip)
+     	{
+     		tip=document.createElement('div');
+         	tip.setAttribute('class', 'tip');
+         	document.body.appendChild(tip);	
+     	}
+    	//更新提示内容
+    	tip.innerText=this.getAttribute('title');
+    	//阻止浏览器显示title属性
+    	this.removeAttribute('title');
+    	//计算显示坐标
+    	event=event||window.event;
+    	var offset=20;
+    	//clientX和clientY为可见区域的x,y不包括滚动条；pageX、pageY为相对页面的坐标（IE不支持);
+    	var scrollTop=Math.max(document.documentElement.scrollTop,document.body.scrollTop);
+    	var scrollLeft=Math.max(document.documentElement.scrollLeft,document.body.scrollLeft);
+    	//页面可视大小
+    	var width=document.documentElement.clientWidth;
+    	var height=document.documentElement.clientHeight;
+    	//鼠标相对于可视区域坐标
+    	var x=event.clientX;
+    	var y=event.clientY;
+    	
+    	if(x+tip.clientWidth+offset>width)
+    	{
+    		x-=(tip.clientWidth+offset);
+    	}
+    	else
+    	{
+    		x+=offset;
+    	}
+    	if(y+tip.clientHeight+offset>height)
+    	{
+    		
+    		y-=(tip.clientHeight+offset);
+    	}
+    	else
+    	{
+			y+=offset;
+		}
+    	
+    	//注意p所在外层元素margin属性对坐标的影响
+    	tip.style.top=y+scrollTop+'px';
+    	tip.style.left=x+scrollLeft+'px';
+    	tip.style.visibility='visible';
+     }
+     function mouseleave(event)
+     {
+    	if(tip)
+    	{
+    		this.setAttribute('title',tip.innerText);
+    		//页面布局被改变，页面就会被重绘
+    		//tip.style.display='none';
+    		//只重绘部分元素
+    		tip.style.visibility='hidden';
+    	}
+     }
+     
+     
+     </script>
+</body>
+</html>

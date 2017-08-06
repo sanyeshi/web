@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>运动动画</title>
+    <style>
+        *{
+            margin: 0;
+            top: 0;
+            font-size: 12px;
+        }
+
+        .ad
+        {
+            width: 226px;
+            height: 200px;
+            position: fixed;
+            top: 30%;
+            left: -200px;
+        }
+
+        .ad-content
+        {
+            width: 200px;
+            height: 200px;
+            background-color: pink;
+            float: left;
+        }
+
+        .ad-btn{
+           width: 20px;
+           background:blue;
+           color: #ffffff;
+           padding: 40px 0px;
+           padding-left: 6px;
+           margin-top: 50px;
+           float: left;
+           cursor: pointer;
+        }
+    </style>
+    <script>
+           window.onload=function(){
+              var ad=document.getElementById('ad');
+              var ad_btn=document.getElementById('ad-btn');
+              var timer=null;
+              var left=-200;
+
+              ad_btn.onclick=function(){
+                   if(timer)
+                   {
+                     return;
+                   }
+                   var speed=5;
+                  //弹出
+                   if(ad.offsetLeft==left)
+                   {
+                       timer=setInterval(function(){
+                               if(ad.offsetLeft>=0)
+                               {
+                                   clearInterval(timer);
+                                   timer=null;
+                               }
+                               else
+                               {
+                                   ad.style.left=ad.offsetLeft+speed+'px';
+                               }
+
+                       },30);
+                   }
+                   else
+                   {
+                       timer=setInterval(function(){
+                           if(ad.offsetLeft<=left)
+                           {
+                               clearInterval(timer);
+                               timer=null;
+                           }
+                           else
+                           {
+                               ad.style.left=ad.offsetLeft-speed+'px';
+                           }
+
+                       },30);
+                   }
+              };
+           }
+    </script>
+</head>
+<body>
+     <div class="ad" id="ad">
+           <div class="ad-content"></div>
+           <div class="ad-btn" id="ad-btn">分享</div>
+     </div>
+</body>
+</html>

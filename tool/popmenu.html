@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>弹出菜单</title>
+<style type="text/css">
+* {
+	font-size: 12px;
+	margin: 0;
+	padding: 0;
+}
+
+a {
+	text-decoration: none;
+}
+
+.menu li {
+	width: 100px;
+	height: 20px;
+	line-height: 20px;
+	float: left;
+	list-style: none;
+	text-align: center;
+
+}
+
+.menu li div {
+	display: none;
+}
+
+.menu>li {
+	margin-left: 20px;
+}
+
+/*css实现方式*/
+/*
+      .menu >li:hover  div
+      {
+         display: block;
+      }
+      
+      .menu li div li:hover
+      {
+        background-color: gray;
+      }
+      */
+</style>
+</head>
+<body>
+	<!-- 
+           实现方式
+           1>css，伪类，但IE6，7并不支持伪类
+           2>javascript
+      -->
+
+	<ul class="menu" id="menu">
+		<li><a href="#">菜单一</a>
+			<div>
+				<ul>
+					<li><a href="#">内容A</a></li>
+					<li><a href="#">内容B</a></li>
+					<li><a href="#">内容C</a></li>
+				</ul>
+			</div></li>
+		<li><a href="#">菜单二</a>
+			<div>
+				<ul>
+					<li><a href="#">内容A</a></li>
+					<li><a href="#">内容B</a></li>
+					<li><a href="#">内容C</a></li>
+				</ul>
+			</div></li>
+		<li><a href="#">菜单三</a>
+			<div>
+				<ul>
+					<li><a href="#">内容A</a></li>
+					<li><a href="#">内容B</a></li>
+					<li><a href="#">内容C</a></li>
+				</ul>
+			</div></li>
+	</ul>
+
+	<div id="oDiv"></div>
+	<script type="text/javascript">
+		/*js实现方式*/
+		var menu = document.getElementById('menu'); 
+		var lis=menu.children;
+		for (var i = 0; i < lis.length; i++)
+		{
+		     var li=lis[i];
+		     li.onmouseenter=function()
+		     {
+		    	 var a=this.children[0];
+		    	 var div=this.children[1];
+		    	 a.style.color='red';
+		    	 div.style.display='block';
+		     }
+		     li.onmouseleave=function()
+		     {
+		    	 var a=this.children[0];
+		    	 var div=this.children[1];
+		    	 a.style.color='black';
+		    	 div.style.display='none';
+		     }
+		     
+		}
+	</script>
+
+</body>
+</html>
